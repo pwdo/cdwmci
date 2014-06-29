@@ -1,0 +1,363 @@
+/*  Jeet.gs Syntax Quick Reference
+  --------------------------
+  column($ratios: 1, $offset: 0, $cycle: 0, $uncycle: 0, $gutter: $jeet-gutter)
+  span($ratio: 1, $offset: 0)
+  shift($ratios: 0, $col_or_span: column, $gutter: $jeet-gutter)
+  unshift()
+  edit()
+  center($max_width: 1410px, $pad: 0)
+  stack($pad: 0, $align: false)
+  unstack()
+  align($direction: both)
+  cf()
+*/
+
+@import "compass";
+
+// @import "_breakpoint";
+@import "_normalize";
+
+@import '_settings';
+@import '_functions';
+@import '_grid';
+
+// Bp
+@mixin breakpoint($point) {
+	@if $point == phone {
+		@media (max-width: 767px) { @content; }
+	}
+	@else if $point == tablet {
+		@media (min-width: 768px) and (max-width: 1024px) { @content; }
+	}
+	@else if $point == tabletmax {
+		@media (max-width: 1024px) { @content; }
+	}
+	@else if $point == tabletmin {
+		@media (min-width: 768px) { @content; }
+	}
+	@else if $point == desktop {
+		@media (min-width: 1025px) { @content; }
+	}
+	@else {
+		@media #{$point} { @content; }
+	}
+}
+
+// Vars
+$green: 	#37836f;
+$blue: 		#4181c1;
+$lightblue: #ecf2f9;
+$gray: 		#555;
+$black: 	#333;
+$radius: 	5px;
+// @include normalize();
+
+html, button, input, select, textarea {
+	font-size: 18px;
+	line-height: 1.5;
+	color: $gray;
+	font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.2;
+	font-weight: 600;
+	color: $green;
+}
+i, em, cite {
+	font-style: normal;
+}
+a {
+	color: $blue;
+	text-decoration: none;
+	border-bottom: 1px solid $blue;
+	@include transition(0.3s ease-in-out color, 0.3s ease-in-out background);
+	&:hover {
+		color: $green;
+		border-bottom: none;
+	}
+}
+big {
+	font-size: 180%;
+}
+ul, ol {
+	padding: 0;
+	margin: 0;
+}
+
+.list {
+	padding-left: 20px;
+	li {
+		margin: 0 0 10px;
+	}
+}
+
+.font-weight-normal { font-weight: normal; }
+.align-center { text-align: center; }
+
+.container {
+	max-width: 960px;
+	margin: 0 auto;
+	@include breakpoint(tabletmin) {
+	}
+}
+
+/*  Header
+  --------------------------
+*/
+.header {
+	margin-bottom: 20px;
+}
+.brand {
+	@include span(1/4);
+	background: url(../img/brand.jpg) 0 0 no-repeat;
+	.logo {
+		display: block;
+		margin: 20px auto;
+	}
+	.h1, .h2 {
+		color: $black;
+		margin: 0 30px;
+	}
+	.h1 {
+		font-size: 51px;
+		@include breakpoint(phone) {
+			display: none;
+		}
+		@include breakpoint( "(min-width: 768px) and (max-width: 959px)" ) {
+			font-size: 36px;
+		}
+	}
+	.h2 {
+		font-size: 22px;
+		@extend .font-weight-normal;
+		text-shadow: 1px 1px 1px rgba(#fff,0.5);
+		@include breakpoint(phone) {
+			text-align: center;
+			margin-bottom: 20px;
+		}
+		@include breakpoint( "(min-width: 768px) and (max-width: 959px)" ) {
+			font-size: 17px;
+		}
+	}
+}
+.hero {
+	@include span(3/4);
+	position: relative;
+	background: url(../img/hero.jpg) 100% 0 no-repeat;
+	@include breakpoint(phone) {
+		// background-position: 0 120px;
+	}
+	.hero-slogan {
+		font-size: 27px;
+		line-height: 1;
+		@extend .align-center;
+		&, strong {
+			@extend .font-weight-normal;
+		}
+		strong {
+			font-size: 48px;
+			display: block;
+		}
+		@include breakpoint(phone) {
+			display: none;
+			// padding: 1em .5em 3em;
+			// strong {
+			// 	font-size: 44px;
+			// 	line-height: 0.8;
+			// }
+		}
+		@include breakpoint(tabletmin) {
+			position: absolute;
+			top: 20%;
+			right: 7%;
+		}
+	}
+}
+.brand, .hero {
+	height: 380px;
+	@include breakpoint(phone) {
+		height: auto;
+		@include stack();
+	}
+}
+
+.menu {
+	@extend .align-center;
+	margin: 0 0 10px;
+	padding: 10px 0;
+	// border-bottom: 1px solid #ddd;
+	@include cf();
+	@include breakpoint(phone) {
+		background: #fff;
+		background: rgba(#fff, 0.5);
+	}
+}
+.menu-item {
+	font-size: 16px;
+	text-transform: uppercase;
+	list-style: none;
+	@include span(1/5);
+	// display: inline-block;
+	a {
+		// display: inline-block;
+		// padding: 10px 15px;
+			display: block;
+			width: 80%;
+			margin: 0 auto;
+			padding: 10px 0;
+		border-bottom: none;
+		border-radius: $radius;
+	}
+	&.current a, a:hover {
+		// color: #fff;
+		// background: $blue;
+		background: $lightblue;
+		background: rgba($blue, 0.1);
+	}
+}
+
+/*  Content
+  --------------------------
+*/
+.header, .content, .sections, .footer {
+	@include cf();
+}
+.main {
+	@include span(3/4);
+	@include shift(1/4, span, 0);
+}
+.section {
+	@include column(1/3);
+}
+.section-title {
+	a {
+		font-size: 32px;
+		color: #fff;
+		display: block;
+		padding: 1.5em 10px 10px;
+		background: $green url(../img/sections.jpg) 0 0 no-repeat;
+		border-bottom: none;
+		border-radius: $radius;
+		.section-org &,
+		.section-blog & {
+			text-shadow: 1px 1px 10px rgba(#000,0.6);
+		}
+		.section-club & {
+			text-shadow: 1px 1px 10px rgba(#000,0.4);
+			background-position: 0 -96px;
+		}
+		.section-blog & {
+			background-position: 0 -96px * 2;
+		}
+	}
+}
+.section-list {
+	font-size: 16px;
+}
+
+/*  Featured Blog Post
+  --------------------------
+*/
+.featured {
+	margin: 40px 0;
+	padding: 20px;
+	background: $lightblue;
+	border-radius: $radius;
+	@include cf();
+	.aside-title {
+		margin: 0;
+	}
+	.entry-title {
+		@include column(1/3);
+	}
+	.entry-excerpt {
+		@include column(2/3);
+	}
+}
+.entry-title, .entry-excerpt {
+	margin-top: 10px;
+}
+.entry-title {
+	a {
+		font-size: 23px;
+		color: $black;
+		border-bottom: none;
+	}
+}
+.entry-excerpt {
+	font-size: 16px;
+}
+
+/*  Sidebar
+  --------------------------
+*/
+.sidebar {
+	font-size: 14px;
+	@include span(1/4);
+	@include shift(-3/4, span, 0);
+	@include box-sizing(border-box);
+	padding-right: 40px;
+	p {
+		// margin-top: 0;
+	}
+}
+.aside {
+	margin-bottom: 40px;
+}
+.aside-title {
+	font-size: 20px;
+	@extend .font-weight-normal;
+	text-transform: uppercase;
+	margin-bottom: 0;
+	.fa {
+		margin-right: 10px;
+	}
+	a {
+		color: $green;
+		border-bottom: none;
+	}
+}
+
+/*  Footer
+  --------------------------
+*/
+.footer {
+	font-size: 14px;
+	background: $green;
+	margin: 60px 0 0;
+	padding: 20px;
+	.footer-left {
+		@include span(1/2);
+	}
+	.footer-right {
+		@include span(1/2);
+		text-align: right;
+		.fa-facebook-square {
+			margin-left: 5px;
+		}
+	}
+	&, a {
+		color: #ddd;
+		border-bottom: none;
+	}
+	a:hover {
+		color: #fff;
+	}
+	.footer-nav {
+		// padding: 10px;
+		li {
+			display: inline;
+			&:after {
+				content: ' | ';
+			}
+			&:last-child:after {
+				content: '';
+			}
+		}
+		a {
+			padding: 0 10px;
+		}
+	}
+
+}
