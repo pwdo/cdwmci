@@ -6,7 +6,7 @@
 <head>    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consortium for the Development of Western Mindanao Communities, Inc. – CDWMCI</title>
+    <title>Blog &bull; Consortium for the Development of Western Mindanao Communities, Inc. – CDWMCI</title>
     <!--[if lt IE 9]>
     	<script src="http://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script>
     	<script src="http://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -27,10 +27,10 @@
 	<div class="hero">
 		<nav class="nav">
 			<ul class="menu">
-				<li class="current menu-item"><a href="index.html">Home</a></li>
+				<li class="menu-item"><a href="index.html">Home</a></li>
 				<li class="menu-item"><a href="organization.html">Org Profile</a></li>
 				<li class="menu-item"><a href="welfareclub.html">Welfare Club</a></li>
-				<li class="menu-item"><a href="blog.html">Blog</a></li>
+				<li class="current menu-item"><a href="blog.html">Blog</a></li>
 				<li class="menu-item"><a href="contact.html">Contact</a></li>
 			</ul>
 		</nav>
@@ -39,40 +39,12 @@
 </header>
 <div class="content">
 	<div class="main">
-		<div class="sections">
-			<div class="section-org section">
-				<h3 class="section-title"><a href="organization.html">Org Profile</a></h3>
-				<p class="section-desc">Learn about CDWMCI, which is a network of community development groups and professionals.</p>
-				<ul class="section-list list">
-					<li><a href="organization.html#visionmission">Vision &amp; Mission</a></li>
-					<!-- <li><a href="organization.html#objectives">Objectives &amp; Purposes</a></li> -->
-					<li><a href="organization.html#programs">Thrust &amp; Programs</a></li>
-					<li><a href="organization.html#accreditation">Accreditation</a></li>
-				</ul>
-			</div>
-			<div class="section-club section">
-				<h3 class="section-title"><a href="welfareclub.html">Welfare Club</a></h3>
-				<p class="section-desc">Sponsor less fortunate families or avail of medical, educational, &amp; livelihood assistance.</p>
-				<ul class="section-list list">
-					<li><a href="welfareclub.html#invitation">Invitation</a></li>
-					<li><a href="welfareclub.html#benefits">Benefits</a></li>
-					<li><a href="welfareclub.html#payment">Payment</a></li>
-				</ul>
-			</div>
-			<div class="section-blog section">
-				<h3 class="section-title"><a href="blog.html">Blog</a></h3>
-				<p class="section-desc">Get updates on CDWMCI’s projects and helpful articles on entrepreneurship &amp; community development.</p>
-				<ul class="section-list list">
-					<li><a href="blog.html">News</a></li>
-					<li><a href="blog.html">Events</a></li>
-					<li><a href="blog.html">Articles</a></li>
-				</ul>
-			</div>
+		<div class="page-header">
+			<h2 class="page-title h2">Blog</h2>
 		</div>
-		<div class="featured">
-			<h3 class="h3 aside-title"><span class="fa fa-comments"></span> Featured Article</h3>
-			<h4 class="entry-title"><a href="blog.html">Social Entrepreneurs as Agents to Resolve Unemployment</a></h4>
-			<p class="entry-excerpt">Looking for alternative solutions to unemployment, then, is one of the challenges facing us and our government officials. This is not only a question of eradicating poverty but also what really matters to our people. The question that kept on bothering us is how should it be done? <a href="blog.html">Read&nbsp;more&nbsp;&rsaquo;</a></p>
+		<div id="blog"></div>
+		<div class="featured align-center">
+			Visit <a href="http://cdwmci.blogspot.com/">CDWMCI.blogspot.com</a> for more blog entries
 		</div>
 	</div>
 	<aside class="sidebar">
@@ -109,5 +81,62 @@
 	</ul>
 </footer>
 
-</div></body>
+</div>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">google.load("feeds", "1");</script>
+<script type="text/javascript">
+// Date stuff
+var month_names = new Array ( );
+month_names[month_names.length] = "January";
+month_names[month_names.length] = "February";
+month_names[month_names.length] = "March";
+month_names[month_names.length] = "April";
+month_names[month_names.length] = "May";
+month_names[month_names.length] = "June";
+month_names[month_names.length] = "July";
+month_names[month_names.length] = "August";
+month_names[month_names.length] = "September";
+month_names[month_names.length] = "October";
+month_names[month_names.length] = "November";
+month_names[month_names.length] = "December";
+
+var day_names = new Array ( );
+day_names[day_names.length] = "Sunday";
+day_names[day_names.length] = "Monday";
+day_names[day_names.length] = "Tuesday";
+day_names[day_names.length] = "Wednesday";
+day_names[day_names.length] = "Thursday";
+day_names[day_names.length] = "Friday";
+day_names[day_names.length] = "Saturday";
+
+// Feed stuff
+var feedurl = 'http://cdwmci.blogspot.com/feeds/posts/default',
+	feedlim = 5;
+	feed = new google.feeds.Feed(feedurl);
+	feed.setNumEntries(feedlim);
+
+feed.load(function(data) {
+    var entries = data.feed.entries,
+    	blog = document.getElementById('blog'),
+    	output = '';
+
+    // console.log(entries);
+
+    for ( var i = 0; i < entries.length; i++ ) {
+
+    	var date = new Date( entries[i].publishedDate );
+    	formattedDate = month_names[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+
+    	output += '<article class="entry">';
+    	output += '<time class="entry-date">'+ formattedDate +'</time> ';
+    	output += '<h3 class="entry-title"><a href="'+ entries[i].link +'">'+ entries[i].title +'</a></h3>';
+    	output += '<p class="entry-excerpt">' + entries[i].contentSnippet +' <a href="'+ entries[i].link +'">Read&nbsp;more&nbsp;&rsaquo;</a></p>';
+    	output += '</article>';
+    }
+    blog.innerHTML = output;
+});
+</script>
+
+</body>
 </html>
