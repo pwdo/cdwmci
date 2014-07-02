@@ -101,18 +101,9 @@ month_names[month_names.length] = "October";
 month_names[month_names.length] = "November";
 month_names[month_names.length] = "December";
 
-var day_names = new Array ( );
-day_names[day_names.length] = "Sunday";
-day_names[day_names.length] = "Monday";
-day_names[day_names.length] = "Tuesday";
-day_names[day_names.length] = "Wednesday";
-day_names[day_names.length] = "Thursday";
-day_names[day_names.length] = "Friday";
-day_names[day_names.length] = "Saturday";
-
 // Feed stuff
 var feedurl = 'http://cdwmci.blogspot.com/feeds/posts/default',
-	feedlim = 5;
+	feedlim = 7;
 	feed = new google.feeds.Feed(feedurl);
 	feed.setNumEntries(feedlim);
 
@@ -121,10 +112,9 @@ feed.load(function(data) {
     	blog = document.getElementById('blog'),
     	output = '';
 
-    // console.log(entries);
-
     for ( var i = 0; i < entries.length; i++ ) {
 
+    	// get date and convert format
     	var date = new Date( entries[i].publishedDate );
     	formattedDate = month_names[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
 
